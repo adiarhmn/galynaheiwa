@@ -12,7 +12,7 @@ const lang = 'en';
 
 <Layout title="Home" lang={lang}>
   <Navbar lang={lang} />
-  <main>
+  <main class="overflow-x-hidden">
     <Hero lang={lang} />
     <Featured lang={lang} />
     <Story lang={lang} />
@@ -20,9 +20,3 @@ const lang = 'en';
   </main>
   <Footer lang={lang} />
 </Layout>
-
-<style>
-  main {
-    overflow-x: hidden;
-  }
-</style>
