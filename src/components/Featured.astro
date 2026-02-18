@@ -1,0 +1,72 @@
+---
+import { translations, type Language } from '../data/translations';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang = 'id' } = Astro.props;
+const t = translations[lang].featured;
+
+const products = [
+  { name: 'Sasirangan Indigo', category: 'Traditional Fabric', price: 'IDR 850.000', large: true },
+  { name: 'Ecoprint Sutra', category: 'Scarves', price: 'IDR 650.000', large: false },
+  { name: 'Kimono Fusion', category: 'Apparel', price: 'IDR 1.250.000', large: false },
+  { name: 'Clutch Sasirangan', category: 'Bags', price: 'IDR 450.000', large: false },
+];
+---
+
+<section class="py-32 px-8 bg-stone-100">
+  <div class="max-w-[1400px] mx-auto">
+    <header class="flex justify-between items-end mb-16 gap-8 flex-wrap">
+      <div class="max-w-[500px]">
+        <span class="block text-xs font-medium tracking-[0.2em] uppercase text-sky-500 mb-4">
+          {t.label}
+        </span>
+        <h2 class="text-3xl md:text-4xl mb-4">{t.title}</h2>
+        <p class="text-base text-stone-700 leading-relaxed">{t.description}</p>
+      </div>
+      <a 
+        href={lang === 'id' ? '/koleksi' : '/en/collections'} 
+        class="inline-flex items-center gap-2 text-sm font-normal tracking-widest uppercase 
+               pb-3 border-b border-stone-900 transition-all duration-300
+               hover:text-sky-500 hover:border-sky-500 shrink-0"
+      >
+        {t.viewAll}
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {products.map((product, index) => (
+        <article 
+          class:list={[
+            'flex flex-col',
+            product.large && 'md:col-span-2 md:row-span-2',
+          ]}
+        >
+          <div class="flex-1 overflow-hidden min-h-[300px] md:min-h-[200px]">
+            <div 
+              class:list={[
+                'w-full h-full flex items-center justify-center transition-transform duration-500',
+                product.large ? 'bg-stone-400 min-h-[400px] md:min-h-[616px]' : 'bg-stone-300',
+                'hover:scale-[1.02]'
+              ]}
+            >
+              <span class="font-serif text-lg italic text-stone-500">{product.name}</span>
+            </div>
+          </div>
+          <div class="pt-5">
+            <span class="text-[11px] font-medium tracking-widest uppercase text-stone-500 block mb-2">
+              {product.category}
+            </span>
+            <h3 class="text-lg font-medium mb-2">{product.name}</h3>
+            <span class="text-sm text-stone-700">{product.price}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

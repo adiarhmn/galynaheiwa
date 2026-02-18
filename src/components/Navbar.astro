@@ -1,0 +1,56 @@
+---
+import { translations, type Language } from '../data/translations';
+
+interface Props {
+  lang?: Language;
+}
+
+const { lang = 'id' } = Astro.props;
+const t = translations[lang];
+
+const navLinks = [
+  { href: lang === 'id' ? '/' : '/en', label: t.nav.home },
+  { href: lang === 'id' ? '/koleksi' : '/en/collections', label: t.nav.collections },
+  { href: lang === 'id' ? '/cerita' : '/en/story', label: t.nav.story },
+  { href: lang === 'id' ? '/kontak' : '/en/contact', label: t.nav.contact },
+];
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-stone-50/95 backdrop-blur-sm">
+  <nav class="flex items-center justify-between max-w-[1400px] mx-auto px-8 py-6">
+    <a href={lang === 'id' ? '/' : '/en'} class="font-serif text-2xl font-medium tracking-widest uppercase">
+      Galyna Heiwa
+    </a>
+
+    <ul class="flex gap-12 max-md:hidden">
+      {navLinks.map((link) => (
+        <li>
+          <a 
+            href={link.href} 
+            class="text-sm font-normal tracking-widest uppercase relative pb-1 
+                   hover:text-sky-500 after:content-[''] after:absolute after:bottom-0 after:left-0 
+                   after:w-0 after:h-px after:bg-sky-500 after:transition-all after:duration-300
+                   hover:after:w-full"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="flex items-center gap-6 max-md:hidden">
+      <a 
+        href={lang === 'id' ? '/en' : '/'} 
+        class="text-xs font-medium tracking-widest uppercase px-4 py-2 border border-stone-900
+               transition-all duration-300 hover:bg-stone-900 hover:text-stone-50"
+      >
+        {lang === 'id' ? 'EN' : 'ID'}
+      </a>
+    </div>
+
+    <button class="hidden max-md:flex flex-col gap-1.5 p-2" aria-label="Toggle menu">
+      <span class="block w-6 h-px bg-stone-900"></span>
+      <span class="block w-6 h-px bg-stone-900"></span>
+    </button>
+  </nav>
+</header>
